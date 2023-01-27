@@ -6,9 +6,14 @@ const userInformation = firestore.collection("MainLineIPO");
 
 /* GetMainLineIpo  **/
 const GetMainLineIpo = async (req, res) => {
-  const GetIpo = await userInformation
+  const CategoryForIPOS = req.body.CategoryForIPOS;
+  const LiveIpo = await userInformation
+    .where("CategoryForIPOS", "==", CategoryForIPOS)
+    .where("IPOStatus", "in", ["AllotmentOut", "WaitingAllotment", "Live"])
+    // AllotmentOut
     .select(
       "companyName",
+      "CategoryForIPOS",
       "IPOOpenDate",
       "IPOCloseDate",
       "lotSize",
@@ -25,15 +30,178 @@ const GetMainLineIpo = async (req, res) => {
       "total"
     )
     .get();
-  if (GetIpo) {
-    const MainLineIpo = GetIpo.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    res.status(200).send({ msg: "All MainLineIpo", data: MainLineIpo });
+  const UpcomingIPO = await userInformation
+    .where("CategoryForIPOS", "==", CategoryForIPOS)
+    .where("IPOStatus", "==", "Upcoming")
+    .select(
+      "companyName",
+      "CategoryForIPOS",
+      "IPOOpenDate",
+      "IPOCloseDate",
+      "lotSize",
+      "GMPStatus",
+      "GMP",
+      "IPOStatus",
+      "fromPrice",
+      "toPrice",
+      "file",
+      "BSEScript",
+      "ListingPrice",
+      "closingPrice",
+      "NSECode",
+      "total"
+    )
+    .get();
+  const ListedIPO = await userInformation
+    .where(
+      "CategoryForIPOS",
+      "==",
+      CategoryForIPOS,
+      "&&",
+      "IPOStatus",
+      "==",
+      "Listed"
+    )
+    .where("IPOStatus", "==", "Listed")
+    .select(
+      "companyName",
+      "CategoryForIPOS",
+      "IPOOpenDate",
+      "IPOCloseDate",
+      "lotSize",
+      "GMPStatus",
+      "GMP",
+      "IPOStatus",
+      "fromPrice",
+      "toPrice",
+      "file",
+      "BSEScript",
+      "ListingPrice",
+      "closingPrice",
+      "NSECode",
+      "total"
+    )
+    .get();
+  // const liveIpo = LiveIpo.docs.map((doc) => ({
+  //   ...doc.data(),
+  // }));
+
+  // const upcomingIpo = UpcomingIPO.docs.map((doc) => ({
+  //   ...doc.data(),
+  // }));
+
+  // const listedIpo = ListedIPO.docs.map((doc) => ({
+  //   ...doc.data(),
+  // }));
+  // const allIPO = { LiveIpo };
+
+  const liveIpo = LiveIpo.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  const upcomingIpo = UpcomingIPO.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  const listedIPO = ListedIPO.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  const AllIPO = { liveIpo, upcomingIpo, listedIPO };
+  res.status(200).send({ msg: "Get IPO Successfully", data: AllIPO });
+  if (AllIPO) {
   } else {
-    res.status(300).send({ msg: "MainLineIpo Not Found" });
+    res.status(300).send({ msg: "IPO Not Found" });
   }
+
+  // const UpcomingIpo = await userInformation
+  //   .where(
+  //     "CategoryForIPOS",
+  //     "==",
+  //     CategoryForIPOS,
+  //     "&&",
+  //     "IPOStatus",
+  //     "==",
+  //     "Upcoming"
+  //   )
+  //   .select(
+  //     "companyName",
+  //     "CategoryForIPOS",
+  //     "IPOOpenDate",
+  //     "IPOCloseDate",
+  //     "lotSize",
+  //     "GMPStatus",
+  //     "GMP",
+  //     "IPOStatus",
+  //     "fromPrice",
+  //     "toPrice",
+  //     "file",
+  //     "BSEScript",
+  //     "ListingPrice",
+  //     "closingPrice",
+  //     "NSECode",
+  //     "total"
+  //   )
+  //   .get();
+  // const ListedIpo = await userInformation
+  //   .where(
+  //     "CategoryForIPOS",
+  //     "==",
+  //     CategoryForIPOS,
+  //     "&&",
+  //     "IPOStatus",
+  //     "==",
+  //     "Listed"
+  //   )
+  //   .select(
+  //     "companyName",
+  //     "CategoryForIPOS",
+  //     "IPOOpenDate",
+  //     "IPOCloseDate",
+  //     "lotSize",
+  //     "GMPStatus",
+  //     "GMP",
+  //     "IPOStatus",
+  //     "fromPrice",
+  //     "toPrice",
+  //     "file",
+  //     "BSEScript",
+  //     "ListingPrice",
+  //     "closingPrice",
+  //     "NSECode",
+  //     "total"
+  //   )
+  //   .get();
+
+  // const liveIpo = LiveIpo.docs.map((doc) => ({
+  //   id: doc.id,
+  //   ...doc.data(),
+  // }));
+
+  // const upcomingIpo = UpcomingIpo.docs.map((doc) => ({
+  //   id: doc.id,
+  //   ...doc.data(),
+  // }));
+
+  // const listedIpo = ListedIpo.docs.map((doc) => ({
+  //   id: doc.id,
+  //   ...doc.data(),
+  // }));
+  // console.log(liveIpo, "liveIpoliveIpoliveIpoliveIpo");
+  // // const live = { ...liveIpo };
+  // // const upcomeing = { ...upcomingIpo };
+  // // const listed = { ...listedIpo };
+  // const AllIPO = { liveIpo, upcomingIpo, listedIpo };
+  // console.log(AllIPO);
+  // if (AllIPO) {
+  //   // const Ipo = AllIPO.docs.map((doc) => ({
+  //   //   id: doc.id,
+  //   //   ...doc.data(),
+  //   // }));
+  //   res.status(200).send({ msg: "Get IPO Successfully", data: AllIPO });
+  // } else {
+  //   res.status(300).send({ msg: "IPO Not Found" });
+  // }
 };
 
 /* GetMainLineIpo By Single Id **/

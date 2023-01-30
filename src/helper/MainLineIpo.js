@@ -176,7 +176,7 @@ const GetIdByMainLineIpo = async (req, res) => {
             const listingDifferent = Data.listingDifferent;
             const BSEScript = Data.BSEScript;
             const closingPrice = Data.closingPrice;
-            const ListingPrice = Data.ListingPrice;
+            const listingPrice = Data.listingPrice;
             const listingPosition = Data.listingPosition;
             const weekLow = Data.weekLow;
             const NSECode = Data.NSECode;

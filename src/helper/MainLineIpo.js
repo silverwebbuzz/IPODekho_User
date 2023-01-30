@@ -24,7 +24,7 @@ const GetMainLineIpo = async (req, res) => {
       "toPrice",
       "file",
       "BSEScript",
-      "ListingPrice",
+      "listingPrice",
       "closingPrice",
       "NSECode",
       "total"
@@ -76,7 +76,7 @@ const GetMainLineIpo = async (req, res) => {
       "toPrice",
       "file",
       "BSEScript",
-      "ListingPrice",
+      "listingPrice",
       "closingPrice",
       "NSECode",
       "total"

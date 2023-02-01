@@ -1,6 +1,6 @@
 const { Firestore } = require("@google-cloud/firestore");
-const CREDENTIALS = require("../config/ipodekho-19fc1-firebase-adminsdk-98o3u-1674a03d07.json");
-const { firestore } = require("../config/firestoreCloud");
+const CREDENTIALS = require("../../config/ipodekho-19fc1-firebase-adminsdk-98o3u-1674a03d07.json");
+const { firestore } = require("../../config/firestoreCloud");
 
 const userInformation = firestore.collection("MainLineIPO");
 
@@ -176,7 +176,7 @@ const GetIdByMainLineIpo = async (req, res) => {
             const listingDifferent = Data.listingDifferent;
             const BSEScript = Data.BSEScript;
             const closingPrice = Data.closingPrice;
-            const ListingPrice = Data.ListingPrice;
+            const listingPrice = Data.listingPrice;
             const listingPosition = Data.listingPosition;
             const weekLow = Data.weekLow;
             const NSECode = Data.NSECode;
@@ -266,7 +266,7 @@ const GetIdByMainLineIpo = async (req, res) => {
               listingDifferent,
               BSEScript,
               closingPrice,
-              ListingPrice,
+              listingPrice,
               listingPosition,
               weekLow,
               NSECode,

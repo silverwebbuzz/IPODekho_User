@@ -4,13 +4,11 @@ const Profile = require("../../helper/Profile/profile");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/updateProfile", upload.single("file"), Profile.UpdateProfile);
+router.post("/updateProfile", upload.single("photoURL"), Profile.UpdateProfile);
 router.post("/register", Profile.createProfile);
 router.post("/login", Profile.login);
-router.post("/logout", Profile.signout);
-router.post("/GetSingleUser", Profile.GetSingleUser);
-// router.post("/sendOtp", Profile.sendOtp);
-router.post("/ResetPassword", Profile.resetPassword);
+router.get("/GestSingleUser", Profile.getProfile);
+router.post("/otpSend", Profile.otpSend);
 // router.post("/uploadImage", FIREBASE_API.uploadFile);
 
 module.exports = {

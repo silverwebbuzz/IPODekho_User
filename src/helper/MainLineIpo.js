@@ -3,6 +3,23 @@ const CREDENTIALS = require("../config/ipodekho-19fc1-firebase-adminsdk-98o3u-16
 const { firestore } = require("../config/firestoreCloud");
 
 const userInformation = firestore.collection("MainLineIPO");
+const messageCollection = firestore.collection("messageCollection");
+const GetMessage = async (req, res) => {
+  try {
+    const message = await messageCollection.select("id")
+    if (message) {
+      const GetAll = message.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      res.status(200).send({ msg: "Get Successfully", data: GetAll });
+    } else {
+      res.status(300).send({ msg: " Not Found" });
+    }
+  } catch (error) {
+    res.status(400).send({ msg: "User Not Found" });
+  }
+};
 
 /* GetMainLineIpo  **/
 const GetMainLineIpo = async (req, res) => {
@@ -208,6 +225,14 @@ const GetIdByMainLineIpo = async (req, res) => {
 
             const file = Data.file;
             usersArray.push(doc.data());
+
+            const getFaq = faqs.select("faq").get();
+            if (getFaq) {
+              const Faqs = getFaq.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }));
+            }
             const General = {
               IPOOpenDate,
               IPOCloseDate,
@@ -510,4 +535,5 @@ const GetIdByMainLineIpo = async (req, res) => {
 module.exports = {
   GetMainLineIpo,
   GetIdByMainLineIpo,
+  GetMessage,
 };

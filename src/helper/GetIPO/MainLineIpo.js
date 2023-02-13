@@ -27,7 +27,9 @@ const GetMainLineIpo = async (req, res) => {
       "ListingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "chatRoomId",
+      "shortText"
     )
     .get();
   const UpcomingIPO = await userInformation
@@ -49,7 +51,9 @@ const GetMainLineIpo = async (req, res) => {
       "ListingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "chatRoomId",
+      "shortText"
     )
     .get();
   const ListedIPO = await userInformation
@@ -79,7 +83,9 @@ const GetMainLineIpo = async (req, res) => {
       "listingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "chatRoomId",
+      "shortText"
     )
     .get();
   if (type === "") {
@@ -129,12 +135,18 @@ const GetIdByMainLineIpo = async (req, res) => {
           if (doc.id == id && True) {
             True = false;
             const Data = doc.data();
+
             // if (Data.CategoryForIPOS === CategoryForIPOS) {
             //MainLineIPO Genral
             const id = doc.id;
+
+            const chatRoomId = Data.chatRoomId;
+            const shortText = Data.shortText;
+
             const preIssueShareHolding = Data.preIssueShareHolding;
             const reatailQuota = Data.reatailQuota;
             const qibQuota = Data.qibQuota;
+
             const DRHPDraft = Data.DRHPDraft;
             const companyDescription = Data.companyDescription;
             const freshIssue = Data.freshIssue;
@@ -209,6 +221,8 @@ const GetIdByMainLineIpo = async (req, res) => {
             const file = Data.file;
             usersArray.push(doc.data());
             const General = {
+              chatRoomId,
+              shortText,
               IPOOpenDate,
               IPOCloseDate,
               IPOAllotmentDate,

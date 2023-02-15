@@ -8,7 +8,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 var admin = require("firebase-admin");
 const { Query } = require("@google-cloud/firestore");
 const userInformation = firestore.collection("Profile");
-const base64 = require("base64-to-image");
+
 const crypto = require("crypto");
 const e = require("express");
 const bcrypt = require("bcrypt");

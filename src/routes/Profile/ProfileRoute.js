@@ -7,7 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/updateProfile", upload.single("photoURL"), Profile.UpdateProfile);
 router.post("/register", Profile.createProfile);
 router.post("/login", Profile.login);
-router.get("/GestSingleUser", Profile.getProfile);
+router.get("/GetSingleUser", Profile.getProfile);
 router.post("/otpSend", Profile.otpSend);
 // router.post("/uploadImage", FIREBASE_API.uploadFile);
 

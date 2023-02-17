@@ -73,7 +73,7 @@ Get Single Profile With Google authentication
 **/
 const getProfile = async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id;
     admin
       .auth()
       .getUser(id)

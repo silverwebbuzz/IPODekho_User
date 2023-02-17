@@ -8,7 +8,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 var admin = require("firebase-admin");
 const { Query } = require("@google-cloud/firestore");
 const userInformation = firestore.collection("Profile");
-
 const crypto = require("crypto");
 const e = require("express");
 const bcrypt = require("bcrypt");
@@ -43,7 +42,7 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          res.status(300).send({ msg: "UserId Not Found" });
+          res.status(300).send(error);
         });
     } else {
       const uid = req.body.id;
@@ -60,7 +59,7 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          res.status(300).send({ msg: "UserId Not Found" });
+          res.status(300).send(error);
         });
     }
   } catch (error) {
@@ -95,7 +94,7 @@ const getProfile = async (req, res) => {
         });
       })
       .catch((error) => {
-        console.error("Error retrieving user:", error);
+        res.status(300).send(error);
       });
   } catch (error) {
     console.log(error, "error");

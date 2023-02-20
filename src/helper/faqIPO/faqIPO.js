@@ -3,7 +3,9 @@ const CREDENTIALS = require("../../config/ipodekho-19fc1-firebase-adminsdk-98o3u
 const { firestore } = require("../../config/firestoreCloud");
 
 const Faqs = firestore.collection("Faqs");
-
+/**
+ * The following Api contains source code for a  GetAll Faqs-IPo.
+ */
 const GetAllFaqs = async (req, res) => {
   try {
     const GetFaq = await Faqs.select("id", "faq").get();
@@ -23,10 +25,9 @@ const GetAllFaqs = async (req, res) => {
   }
 };
 
-/* 
-Get All News
-**/
-
+/**
+ * The following Api contains source code for a  Get Single Faq-IPo.
+ */
 const GetSingleFaqs = async (req, res) => {
   try {
     const id = req.params.id;

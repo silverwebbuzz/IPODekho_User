@@ -1,9 +1,9 @@
 const { firestore } = require("../../config/firestoreCloud");
 const Contact = firestore.collection("Contact Us");
 
-/* 
-Create Contact Us IPO
-**/
+/**
+ * The following Api contains source code for a  Contact Us IPO.
+ */
 const createContact = async (req, res, body) => {
   try {
     const email = req.body.email;

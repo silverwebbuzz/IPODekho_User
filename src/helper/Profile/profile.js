@@ -44,13 +44,14 @@ const UpdateProfile = async (req, res, body) => {
         .catch((error) => {
           res.status(300).send(error);
         });
-    } else {
+    } else if (req.file == null) {
       const uid = req.body.id;
       admin
         .auth()
         .updateUser(uid, {
           displayName: req.body.displayName,
           phoneNumber: req.body.phoneNumber,
+          photoURL: null,
         })
         .then((data) => {
           return res.status(201).send({

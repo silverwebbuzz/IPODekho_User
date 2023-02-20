@@ -11,7 +11,8 @@ const GetAllNews = async (req, res) => {
       "Date",
       "Title",
       "Content",
-      "file"
+      "file",
+      "url"
     ).get();
     if (GetNews) {
       const GetAllNews = GetNews.docs.map((doc) => ({
@@ -47,6 +48,7 @@ const GetSingleNews = async (req, res) => {
           const file = Data.file;
           const Date = Data.Date;
           const Title = Data.Title;
+          const url = Data.url;
           const id = doc.id;
           usersArray.push(doc.data());
           const NewsData = {
@@ -55,6 +57,7 @@ const GetSingleNews = async (req, res) => {
             Date,
             Title,
             file,
+            url,
           };
           res.status(200).send({
             msg: "Get Single News Successfully",

@@ -11,7 +11,9 @@ const GetAllOffer = async (req, res) => {
       "offerStatus",
       "offerTitle",
       "offerSequence",
-      "offerDescription"
+      "offerDescription",
+      "file",
+      "url"
     ).get();
     const liveIpo = LiveIpo.docs.map((doc) => ({
       id: doc.id,
@@ -19,9 +21,9 @@ const GetAllOffer = async (req, res) => {
     }));
 
     if (liveIpo.length > 0) {
-      res.status(200).send({ msg: "Get IPO Successfully", liveIpo });
+      res.status(200).send({ msg: "Get Offers Successfully", liveIpo });
     } else {
-      res.status(300).send({ msg: "IPO Not Found" });
+      res.status(300).send({ msg: "Offers Not Found" });
     }
   } catch (error) {
     res.status(400).send({ msg: "User Not Found" });
@@ -47,6 +49,8 @@ const GetIdByOffers = async (req, res) => {
             const offerTitle = Data.offerTitle;
             const offerSequence = Data.offerSequence;
             const offerDescription = Data.offerDescription;
+            const file = Data.file;
+            const url = Data.url;
             usersArray.push(doc.data());
             const Offer = {
               id,
@@ -54,6 +58,8 @@ const GetIdByOffers = async (req, res) => {
               offerTitle,
               offerSequence,
               offerDescription,
+              file,
+              url
             };
             res.status(200).send({
               msg: "Offer Get Successfully ",

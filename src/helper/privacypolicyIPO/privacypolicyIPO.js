@@ -3,7 +3,9 @@ const CREDENTIALS = require("../../config/ipodekho-19fc1-firebase-adminsdk-98o3u
 const { firestore } = require("../../config/firestoreCloud");
 
 const privacyPolicy = firestore.collection("PrivacyPolicy");
-
+/**
+ * The following Api contains source code for a  Get All Privacy-policy .
+ */
 const AllPrivacyPolicy = async (req, res) => {
   try {
     const GetPrivacy = await privacyPolicy.select("id", "PrivacyPolicy").get();
@@ -23,11 +25,9 @@ const AllPrivacyPolicy = async (req, res) => {
     res.status(400).send({ msg: "User Not Found" });
   }
 };
-
-/*  
-Get All News
-**/
-
+/**
+ * The following Api contains source code for a  Get Single Privacy-policy .
+ */
 const SinglePrivacyPolicy = async (req, res) => {
   try {
     const id = req.params.id;

@@ -18,12 +18,17 @@ webApp.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 webApp.use(cors());
 
 const PORT = process.env.PORT || 6000;
+/**
+ *firebase Credential Connect
+ */
 admin.initializeApp({
   credential: admin.credential.cert(CREDENTIALS),
   storageBucket: "gs://ipodekho-19fc1.appspot.com",
 });
 var bucket = admin.storage().bucket();
-
+/**
+ * The following contains for a All IPO API Routes.
+ */
 const homeRoute = require("./src/routes/mainlineRoute");
 const offerRoute = require("./src/routes/OfferIPO/OfferIPORoute");
 const newsRoute = require("./src/routes/NewsIPO/newsRoute");
@@ -42,6 +47,9 @@ webApp.use(faq.router);
 webApp.use(privacyPolicy.router);
 webApp.use(termsAndCondition.router);
 webApp.use(ipoAllotmentTips.router);
+/**
+ *server running this port.
+ */
 webApp.listen(PORT, () => {
   console.log(`Server is up and running at ${PORT}`);
 });

@@ -3,9 +3,9 @@ const CREDENTIALS = require("../../config/ipodekho-19fc1-firebase-adminsdk-98o3u
 const { firestore } = require("../../config/firestoreCloud");
 
 const IPOAllotmentTips = firestore.collection("IPOAllotmentTips");
-/* 
-Get AllotmentTips
-**/
+/**
+ * The following Api contains source code for a  Get AllotmentTips.
+ */
 const GetAllotmentTips = async (req, res) => {
   try {
     const GetTips = await IPOAllotmentTips.select("id", "AllotmentTips").get();
@@ -25,11 +25,9 @@ const GetAllotmentTips = async (req, res) => {
     res.status(400).send({ msg: "User Not Found" });
   }
 };
-
-/* 
-Get Single AllotmentTips 
-**/
-
+/**
+ * The following Api contains source code for a  Get Single AllotmentTips.
+ */
 const GetSingleAllotmentTips = async (req, res) => {
   try {
     const id = req.params.id;

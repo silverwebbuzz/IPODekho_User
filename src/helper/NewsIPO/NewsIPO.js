@@ -3,7 +3,9 @@ const CREDENTIALS = require("../../config/ipodekho-19fc1-firebase-adminsdk-98o3u
 const { firestore } = require("../../config/firestoreCloud");
 
 const News = firestore.collection("News");
-
+/**
+ * The following Api contains source code for a  GetAll News With Selected Field Get Data.
+ */
 const GetAllNews = async (req, res) => {
   try {
     const GetNews = await News.select(
@@ -30,10 +32,9 @@ const GetAllNews = async (req, res) => {
   }
 };
 
-/* 
-Get All News
-**/
-
+/**
+ * The following Api contains source code for a  Get Single News With Selected Field Get Data.
+ */
 const GetSingleNews = async (req, res) => {
   try {
     const id = req.params.id;
@@ -48,8 +49,8 @@ const GetSingleNews = async (req, res) => {
           const file = Data.file;
           const Date = Data.Date;
           const Title = Data.Title;
-          const url = Data.url;
           const id = doc.id;
+          const url = Data.url;
           usersArray.push(doc.data());
           const NewsData = {
             id,

@@ -29,7 +29,7 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          res.status(300).send({ msg: error.message });
+          res.status(300).send({ msg: "The user with the provided phone number already exists." });
         });
     } else {
       const uid = req.body.id;
@@ -46,7 +46,7 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          res.status(300).send({ msg: error.message });
+          res.status(300).send({ msg: "The user with the provided phone number already exists." });
         });
     }
   } catch (error) {
@@ -80,7 +80,7 @@ const getProfile = async (req, res) => {
         });
       })
       .catch((error) => {
-        res.status(300).send({ msg: error.message });
+        res.status(300).send({ msg: "Not Found" });
       });
   } catch (error) {
     console.log(error, "error");

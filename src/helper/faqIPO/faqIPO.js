@@ -14,9 +14,10 @@ const GetAllFaqs = async (req, res) => {
         id: doc.id,
         ...doc.data(),
       }));
+
       res
         .status(200)
-        .send({ msg: "Get All Faqs Successfully", data: GetAllFaqs });
+        .send({ msg: "Get All Faqs Successfully", data: GetAllFaqs[0] });
     } else {
       res.status(300).send({ msg: "Faqs Not Found" });
     }

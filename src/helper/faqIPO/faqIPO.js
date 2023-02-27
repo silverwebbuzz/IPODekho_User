@@ -14,7 +14,6 @@ const GetAllFaqs = async (req, res) => {
         id: doc.id,
         ...doc.data(),
       }));
-
       res
         .status(200)
         .send({ msg: "Get All Faqs Successfully", data: GetAllFaqs[0] });

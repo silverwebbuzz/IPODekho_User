@@ -19,7 +19,6 @@ const createContact = async (req, res, body) => {
       if (ContactIPO) {
         const id = await Contact.add(contact);
         const ids = { id: id.id };
-
         const merged = Object.assign(ContactIPO, ids, createdAt);
         res.status(200).send({
           msg: "Contact Created Successfully",

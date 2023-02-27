@@ -21,16 +21,21 @@ const UpdateProfile = async (req, res, body) => {
           displayName: req.body.displayName,
           photoURL: file,
           phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
         })
         .then((data) => {
-          return res.status(201).send({
-            msg: "Profile Updated SuccessFully",
-            data: data,
-          });
+          if (data) {
+            return res.status(201).send({
+              msg: "Profile Updated SuccessFully",
+              data: data,
+            });
+          } else {
+            return res.status(300).send({
+              msg: "The user with the provided phone number Already exists",
+            });
+          }
         })
-        .catch((error) => {
-       return  res.status(300).send({ msg: "The user with the provided phone number already exists." });
-        });
+        .catch((error) => {});
     } else {
       const uid = req.body.id;
       admin
@@ -38,6 +43,7 @@ const UpdateProfile = async (req, res, body) => {
         .updateUser(uid, {
           displayName: req.body.displayName,
           phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
         })
         .then((data) => {
           return res.status(201).send({
@@ -46,7 +52,9 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          res.status(300).send({ msg: "The user with the provided phone number already exists." });
+          return res.status(300).send({
+            msg: "The user with the provided phone number exists",
+          });
         });
     }
   } catch (error) {
@@ -64,6 +72,7 @@ const getProfile = async (req, res) => {
       .auth()
       .getUser(id)
       .then((user) => {
+        console.log(user);
         const photoURL = user.photoURL;
         const displayName = user.displayName;
         const phoneNumber = user.phoneNumber;
@@ -80,7 +89,7 @@ const getProfile = async (req, res) => {
         });
       })
       .catch((error) => {
-     return res.status(300).send({ msg: "Not Found" });
+        res.status(300).send({ msg: error.message });
       });
   } catch (error) {
     console.log(error, "error");

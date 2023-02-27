@@ -44,7 +44,8 @@ const GetMainLineIpo = async (req, res) => {
       "ListingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "disclaimer"
     )
     .get();
   const UpcomingIPO = await userInformation
@@ -66,7 +67,8 @@ const GetMainLineIpo = async (req, res) => {
       "ListingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "disclaimer"
     )
     .get();
   const ListedIPO = await userInformation
@@ -96,7 +98,8 @@ const GetMainLineIpo = async (req, res) => {
       "listingPrice",
       "closingPrice",
       "NSECode",
-      "total"
+      "total",
+      "disclaimer"
     )
     .get();
   if (type === "") {
@@ -149,6 +152,7 @@ const GetIdByMainLineIpo = async (req, res) => {
             // if (Data.CategoryForIPOS === CategoryForIPOS) {
             //MainLineIPO Genral
             const id = doc.id;
+            const disclaimer = Data.disclaimer;
             const preIssueShareHolding = Data.preIssueShareHolding;
             const reatailQuota = Data.reatailQuota;
             const qibQuota = Data.qibQuota;
@@ -234,6 +238,7 @@ const GetIdByMainLineIpo = async (req, res) => {
               }));
             }
             const General = {
+              disclaimer,
               IPOOpenDate,
               IPOCloseDate,
               IPOAllotmentDate,

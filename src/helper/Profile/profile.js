@@ -34,8 +34,11 @@ const UpdateProfile = async (req, res, body) => {
               msg: "The user with the provided phone number Already exists",
             });
           }
-        })
-        .catch((error) => {});
+        }).catch((error) => {
+          return res.status(400).send({
+            msg: error.errorInfo.code,
+          });
+        });
     } else {
       const uid = req.body.id;
       admin
@@ -51,12 +54,11 @@ const UpdateProfile = async (req, res, body) => {
             data: data,
           });
         })
-        .catch((error) => {
-          return res.status(300).send({
-            msg: "The user with the provided phone number exists",
+       .catch((error) => {
+          return res.status(400).send({
+            msg: error.errorInfo.code,
           });
         });
-    }
   } catch (error) {
     console.log(error, "error");
     res.status(400).send({ msg: "User Not Found" });

@@ -8,6 +8,81 @@ const userInformation = firestore.collection("Profile");
 /**
  * The following Api contains source code for a User In Updated Profile .
  */
+// const UpdateProfile = async (req, res, body) => {
+//   try {
+//     const uid = req.body.id;
+//     const user = await admin.auth().getUser(uid);
+//     const googleProvider = user.providerData.find(
+//       (provider) => provider.providerId === "google.com"
+//     );
+
+//     if (req.file) {
+//       // update file and non-file fields
+//       const name = saltedMd5(req.file.originalname, "SUPER-S@LT!");
+//       const fileName = name + path.extname(req.file.originalname);
+//       const file = `https://firebasestorage.googleapis.com/v0/b/ipodekho-19fc1.appspot.com/o/${fileName}?alt=media&token=11c648b5-a554-401c-bc4e-ba9155f29744`;
+
+//       const updatedFields = {
+//         displayName: req.body.displayName,
+//         photoURL: file,
+//         phoneNumber: req.body.phoneNumber,
+//         email: req.body.email,
+//       };
+
+//       // update Google provider data if necessary
+//       if (googleProvider) {
+//         updatedFields.providerData = [
+//           {
+//             providerId: "google.com",
+//             uid: googleProvider.uid,
+//             displayName: req.body.displayName,
+//             photoURL: file,
+//           },
+//         ];
+//       }
+
+//       // update user data
+//       const data = await admin.auth().updateUser(uid, updatedFields);
+//       // console.log(data);
+//       if (data) {
+//          res.status(201).send({
+//           msg: "Profile Updated SuccessFully",
+//           data: data,
+//         });
+//       } else {
+//         return res.status(300).send({
+//           msg: "The user with the provided phone number Already exists",
+//         });
+//       }
+//     } else {
+//       // update non-file fields only
+//       const updatedFields = {
+//         displayName: req.body.displayName,
+//         phoneNumber: req.body.phoneNumber,
+//         email: req.body.email,
+//       };
+//       // update Google provider data if necessary
+//       if (googleProvider) {
+//         updatedFields.providerData = [
+//           {
+//             providerId: "google.com",
+//             uid: googleProvider.uid,
+//             displayName: req.body.displayName,
+//           },
+//         ];
+//       }
+//       // update user data
+//       const data = await admin.auth().updateUser(uid, updatedFields);
+//       return res.status(201).send({
+//         msg: "Profile Updated SuccessFully",
+//         data: data,
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error, "error");
+//     res.status(400).send({ msg: "User Not Found" });
+//   }
+// };
 const UpdateProfile = async (req, res, body) => {
   try {
     if (req.file) {
@@ -34,10 +109,14 @@ const UpdateProfile = async (req, res, body) => {
               msg: "The user with the provided phone number Already exists",
             });
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
+          // if (error.message === "auth/email-already-in-use") {
+          console.log(error.errorInfo.code);
           return res.status(400).send({
             msg: error.errorInfo.code,
           });
+          // }
         });
     } else {
       const uid = req.body.id;
@@ -54,11 +133,13 @@ const UpdateProfile = async (req, res, body) => {
             data: data,
           });
         })
-       .catch((error) => {
+        .catch((error) => {
+          console.log(error.errorInfo.code);
           return res.status(400).send({
             msg: error.errorInfo.code,
           });
         });
+    }
   } catch (error) {
     console.log(error, "error");
     res.status(400).send({ msg: "User Not Found" });
@@ -94,7 +175,6 @@ const getProfile = async (req, res) => {
         res.status(300).send({ msg: error.message });
       });
   } catch (error) {
-    console.log(error, "error");
     res.status(400).send({ msg: "User Not Found" });
   }
 };

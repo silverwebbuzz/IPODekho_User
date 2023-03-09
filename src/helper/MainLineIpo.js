@@ -217,7 +217,7 @@ const GetIdByMainLineIpo = async (req, res) => {
             const website = Data.website;
 
             //Status
-            const IPOstatus = Data.IPOStatus;
+            const IPOStatus = Data.IPOStatus;
             const CategoryForIPOS = Data.CategoryForIPOS;
             //Tentative Timetable
             const IPOOpenDate = Data.IPOOpenDate;
@@ -245,7 +245,7 @@ const GetIdByMainLineIpo = async (req, res) => {
               IPORefundsInitiation,
               IPODematTransfer,
               IPOListingDate,
-              IPOstatus,
+              IPOStatus,
               preIssueShareHolding,
               reatailQuota,
               qibQuota,

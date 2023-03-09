@@ -159,7 +159,7 @@ const getProfile = async (req, res) => {
         const photoURL = user.photoURL;
         const displayName = user.displayName;
         const phoneNumber = user.phoneNumber;
-        const email = user.email;
+        const email = user.providerData[0].email;
         const GetSingleProfile = {
           photoURL: photoURL,
           displayName: displayName,

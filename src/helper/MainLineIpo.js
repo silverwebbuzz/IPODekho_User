@@ -215,7 +215,6 @@ const GetIdByMainLineIpo = async (req, res) => {
             const registerWebsite = Data.registerWebsite;
             const allotmentLink = Data.allotmentLink;
             const website = Data.website;
-
             //Status
             const IPOStatus = Data.IPOStatus;
             const CategoryForIPOS = Data.CategoryForIPOS;
@@ -226,10 +225,8 @@ const GetIdByMainLineIpo = async (req, res) => {
             const IPORefundsInitiation = Data.IPORefundsInitiation;
             const IPODematTransfer = Data.IPODematTransfer;
             const IPOListingDate = Data.IPOListingDate;
-
             const file = Data.file;
             usersArray.push(doc.data());
-
             const getFaq = faqs.select("faq").get();
             if (getFaq) {
               const Faqs = getFaq.docs.map((doc) => ({

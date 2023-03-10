@@ -1,13 +1,15 @@
 const { firestore } = require("../../config/firestoreCloud");
 const express = require("express");
+const webApp = express();
 const saltedMd5 = require("salted-md5");
 const path = require("path");
 var admin = require("firebase-admin");
 const userInformation = firestore.collection("Profile");
-
+const { getAuth, updateProfile } = require("firebase/auth");
 /**
  * The following Api contains source code for a User In Updated Profile .
  */
+webApp.locals.bucket = admin.storage().bucket();
 // const UpdateProfile = async (req, res, body) => {
 //   try {
 //     const uid = req.body.id;
@@ -15,11 +17,14 @@ const userInformation = firestore.collection("Profile");
 //     const googleProvider = user.providerData.find(
 //       (provider) => provider.providerId === "google.com"
 //     );
-
 //     if (req.file) {
 //       // update file and non-file fields
 //       const name = saltedMd5(req.file.originalname, "SUPER-S@LT!");
 //       const fileName = name + path.extname(req.file.originalname);
+//       await webApp.locals.bucket
+//         .file(fileName)
+//         .createWriteStream()
+//         .end(req.file.buffer);
 //       const file = `https://firebasestorage.googleapis.com/v0/b/ipodekho-19fc1.appspot.com/o/${fileName}?alt=media&token=11c648b5-a554-401c-bc4e-ba9155f29744`;
 
 //       const updatedFields = {
@@ -45,7 +50,7 @@ const userInformation = firestore.collection("Profile");
 //       const data = await admin.auth().updateUser(uid, updatedFields);
 //       // console.log(data);
 //       if (data) {
-//          res.status(201).send({
+//         res.status(201).send({
 //           msg: "Profile Updated SuccessFully",
 //           data: data,
 //         });
@@ -89,13 +94,17 @@ const UpdateProfile = async (req, res, body) => {
       const uid = req.body.id;
       const name = saltedMd5(req.file.originalname, "SUPER-S@LT!");
       const fileName = name + path.extname(req.file.originalname);
+      await webApp.locals.bucket
+        .file(fileName)
+        .createWriteStream()
+        .end(req.file.buffer);
       const file = `https://firebasestorage.googleapis.com/v0/b/ipodekho-19fc1.appspot.com/o/${fileName}?alt=media&token=11c648b5-a554-401c-bc4e-ba9155f29744`;
       admin
         .auth()
         .updateUser(uid, {
           displayName: req.body.displayName,
           photoURL: file,
-          phoneNumber: req.body.phoneNumber,
+          phoneNumber: req.body.phoneNumber || "",
           email: req.body.email,
         })
         .then((data) => {
@@ -112,7 +121,6 @@ const UpdateProfile = async (req, res, body) => {
         })
         .catch((error) => {
           // if (error.message === "auth/email-already-in-use") {
-          console.log(error.errorInfo.code);
           return res.status(400).send({
             msg: error.errorInfo.code,
           });
@@ -124,7 +132,7 @@ const UpdateProfile = async (req, res, body) => {
         .auth()
         .updateUser(uid, {
           displayName: req.body.displayName,
-          phoneNumber: req.body.phoneNumber,
+          phoneNumber: req.body.phoneNumber || "",
           email: req.body.email,
         })
         .then((data) => {
@@ -134,7 +142,6 @@ const UpdateProfile = async (req, res, body) => {
           });
         })
         .catch((error) => {
-          console.log(error.errorInfo.code);
           return res.status(400).send({
             msg: error.errorInfo.code,
           });

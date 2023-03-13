@@ -101,12 +101,17 @@ const UpdateProfile = async (req, res, body) => {
       const file = `https://firebasestorage.googleapis.com/v0/b/ipodekho-19fc1.appspot.com/o/${fileName}?alt=media&token=11c648b5-a554-401c-bc4e-ba9155f29744`;
       admin
         .auth()
-        .updateUser(uid, {
-          displayName: req.body.displayName,
-          photoURL: file,
-          phoneNumber: req.body.phoneNumber || "",
-          email: req.body.email,
-        },{ merge: true },{new:true})
+        .updateUser(
+          uid,
+          {
+            displayName: req.body.displayName,
+            photoURL: file,
+            phoneNumber: req.body.phoneNumber || "",
+            email: req.body.email,
+          },
+          { merge: true },
+          { new: true }
+        )
         .then((data) => {
           if (data) {
             return res.status(201).send({
@@ -126,7 +131,7 @@ const UpdateProfile = async (req, res, body) => {
           });
           // }
         });
-    } else {
+    } else if (req.file == null) {
       const uid = req.body.id;
       admin
         .auth()
@@ -134,6 +139,7 @@ const UpdateProfile = async (req, res, body) => {
           displayName: req.body.displayName,
           phoneNumber: req.body.phoneNumber || "",
           email: req.body.email,
+          photoURL: null,
         })
         .then((data) => {
           return res.status(201).send({

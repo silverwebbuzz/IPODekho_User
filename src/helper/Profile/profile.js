@@ -106,7 +106,7 @@ const UpdateProfile = async (req, res, body) => {
           photoURL: file,
           phoneNumber: req.body.phoneNumber || "",
           email: req.body.email,
-        })
+        },{ merge: true },{new:true})
         .then((data) => {
           if (data) {
             return res.status(201).send({
